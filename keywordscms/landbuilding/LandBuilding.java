@@ -124,7 +124,7 @@ public class LandBuilding extends BaseApplication {
 	}	
 	
 	public void run(){
-		int start = 3;
+		int start = 2;
 		int size = getSize(col.B, 1);
 		int max = size + start;
 		System.out.println("size = " + size);

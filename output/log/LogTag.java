@@ -20,7 +20,7 @@ public class LogTag {
 		
 	} 
 	public enum logsubtab{
-		None, Create, Information, General, OtherInfo, ValuateMethod, Cost, Expense, CIF, SaveOK, BuildingInfo
+		None, Create, Information, General, OtherInfo, ValuateMethod, Cost, Expense, CIF, SaveOK, BuildingInfo, PartialMortgage
 	} 
 	public enum logelement{
 		None
