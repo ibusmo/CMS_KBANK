@@ -11,9 +11,8 @@ public class LogTag {
 		None
 	}
 	public enum logoperation{
-		Config, None, Login, Logout, OpenBrowser, 		
-		Machine, RentRigth, Accounting, Equity, Bond, LandBuilding
-		
+		  Config, None, Login, Logout, OpenBrowser,   
+		  Machine, RentRigth, Accounting, Equity, Bond, LandBuilding, BankGuarantee, Building, Land, Vehicle, Intellectual, Gold, Guarantor, Goods, Condo
 	}
 	public enum logtab{
 		None, Collateral, Owner, SaveOK

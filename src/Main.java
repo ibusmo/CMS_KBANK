@@ -17,6 +17,7 @@ public class Main {
 //		new Equity(getAssignedPath()).run();
 //		new Bond(getAssignedPath()).run();
 //		new LandBuilding(getAssignedPath()).run();
+		System.out.println("Hey come back");
 		return ;		
 	}
 	

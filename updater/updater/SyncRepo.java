@@ -35,6 +35,7 @@ public class SyncRepo {
 			System.out.println("Environment Config -Fail - NoSuchAlgorithmException");
 			return;
 		}
+		System.out.println("------------------------------------------------------------------------------------");
 
 		boolean isCurrentVersion = true;
 		try {
@@ -44,6 +45,7 @@ public class SyncRepo {
 			System.out.println("Version Check -Fail - IOException");
 			return;
 		}
+		System.out.println("------------------------------------------------------------------------------------");
 
 		boolean isPullSuccess = false;
 		if (!isCurrentVersion) {
@@ -57,7 +59,8 @@ public class SyncRepo {
 		} else {
 			System.out.println("Not Pull Repository -Pass");
 		}
-
+		System.out.println("------------------------------------------------------------------------------------");
+		
 		//isPullSuccess = true;
 		if (isPullSuccess) {
 
@@ -90,6 +93,8 @@ public class SyncRepo {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("------------------------------------------------------------------------------------");
+		System.out.println("------------------------------------------------------------------------------------");
 		System.out.println("------------------------------------------------------------------------------------");
 	}
 
