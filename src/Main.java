@@ -4,18 +4,19 @@ import equity.Equity;
 import landbuilding.LandBuilding;
 import machine.Machine;
 import rentright.RentRigth;
+import updater.SyncRepo;
 import variable.PathVariable;
 
 public class Main {
-	
+
 	public static void main(String[] args) {
+		new SyncRepo().sync();
 //		new Machine(getAssignedPath()).run();
 //		new RentRigth(getAssignedPath()).run();
 //		new Accounting(getAssignedPath()).run();
 //		new Equity(getAssignedPath()).run();
 //		new Bond(getAssignedPath()).run();
 //		new LandBuilding(getAssignedPath()).run();
-		new SyncRepo().sync();
 		return ;		
 	}
 	

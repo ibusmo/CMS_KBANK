@@ -9,7 +9,6 @@
 	<classpathentry kind="src" path="input"/>
 	<classpathentry kind="src" path="output"/>
 	<classpathentry kind="src" path="libs"/>
-	<classpathentry kind="src" path="updater"/>
 	<classpathentry kind="lib" path="C:/Devs/selenium-2.46.0/selenium-java-2.46.0.jar"/>
 	<classpathentry kind="lib" path="C:/Devs/selenium-2.46.0/selenium-java-2.46.0-srcs.jar"/>
 	<classpathentry kind="lib" path="C:/Devs/selenium-2.46.0/libs/apache-mime4j-0.6.jar"/>
@@ -61,10 +60,8 @@
 	<classpathentry kind="lib" path="C:/Devs/poi-3.12/lib/junit-4.12.jar"/>
 	<classpathentry kind="lib" path="C:/Devs/poi-3.12/lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="libs/Excelio.jar"/>
 	<classpathentry kind="lib" path="libs/file_ose.jar"/>
 	<classpathentry kind="lib" path="libs/network_ose.jar"/>
-	<classpathentry kind="lib" path="libs/ScreenCapture.jar"/>
 	<classpathentry kind="lib" path="libs/zip_ose.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

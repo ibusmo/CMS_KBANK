@@ -1,7 +1,7 @@
+package updater;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -53,12 +53,31 @@ public class SyncRepo {
 				System.out.println("Pull Repository -Fail - IOException");
 				return ;
 			}
+		}else{
+			System.out.println("Not Pull Repository -Pass");			
 		}
 		
+		isPullSuccess = true;
 		if(isPullSuccess){
 			try {
-				copyDir("keywords", "test");
-				copyDir("domelement", "test");
+				File folder = new File(currentPath);
+				File[] listOfFiles = folder.listFiles();
+				    for (int i = 0; i < listOfFiles.length; i++) {
+				    	
+				      if (listOfFiles[i].isFile()) {
+				    	  System.out.println("File " + listOfFiles[i].getName());
+				    	  copyFile(listOfFiles[i].getName(), "test\\" + listOfFiles[i].getName());
+				    
+				      } else if (listOfFiles[i].isDirectory()) {
+				    	  System.out.println("Directory " + listOfFiles[i].getName());
+				    	  if(listOfFiles[i].getName().contains("keywordscms") || listOfFiles[i].getName().contains("updater")){
+				    			System.out.println("skip D - " + tempDirectoy + "\\" + listOfFiles[i].getName());				    		  
+				    	  }else{
+					    	  copyDir(listOfFiles[i].getName(), "test");
+				    	  }
+				      }
+				      
+				    }
 			} catch (IOException e1) {
 				System.out.println("Copy -Fail - IOException");
 				return ;
@@ -126,7 +145,18 @@ public class SyncRepo {
 		return str.replace("\n", "").replace("\r", "");
 	}
 	
+	private void copyFile(String src, String des) throws IOException{
+		System.out.print("copy F - " + tempDirectoy + "\\" + src);
+		System.out.print("\t - to - ");
+		System.out.println(currentPath + "\\" + des);
+		Files.copy(new File(tempDirectoy + "\\" + src).toPath(), new File(currentPath + "\\" + des).toPath(), StandardCopyOption.REPLACE_EXISTING);
+	}
+	
 	private void copyDir(String src, String des) throws IOException{
+		System.out.print("copy D - " + tempDirectoy + "\\" + src);
+		System.out.print("\t - to - ");
+		System.out.println(currentPath + "\\" + des);
 		FileUtils.copyDirectory(new File(tempDirectoy + "\\" + src), new File(currentPath + "\\" + des));
 	}
+	
 }
