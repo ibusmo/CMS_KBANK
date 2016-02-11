@@ -79,7 +79,8 @@ public class SyncRepo {
 						// listOfFiles[i].getName());
 						if (listOfFiles[i].getName().contains("keywordscms")
 								|| listOfFiles[i].getName().contains("updater")
-								|| listOfFiles[i].getName().contains("src")) {
+								|| listOfFiles[i].getName().contains("src")
+								|| listOfFiles[i].getName().contains(".")) {
 							System.out.println("skip D - " + tempDirectoy + "\\" + listOfFiles[i].getName());
 						} else {
 							copyDir(listOfFiles[i].getName(), listOfFiles[i].getName());
