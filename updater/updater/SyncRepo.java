@@ -59,31 +59,35 @@ public class SyncRepo {
 		
 		isPullSuccess = true;
 		if(isPullSuccess){
-			try {
-				File folder = new File(currentPath);
-				File[] listOfFiles = folder.listFiles();
-				    for (int i = 0; i < listOfFiles.length; i++) {
-				    	
-				      if (listOfFiles[i].isFile()) {
-				    	  System.out.println("File " + listOfFiles[i].getName());
-				    	  copyFile(listOfFiles[i].getName(), "test\\" + listOfFiles[i].getName());
-				    
-				      } else if (listOfFiles[i].isDirectory()) {
-				    	  System.out.println("Directory " + listOfFiles[i].getName());
-				    	  if(listOfFiles[i].getName().contains("keywordscms") || listOfFiles[i].getName().contains("updater")){
-				    			System.out.println("skip D - " + tempDirectoy + "\\" + listOfFiles[i].getName());				    		  
-				    	  }else{
-					    	  copyDir(listOfFiles[i].getName(), "test");
-				    	  }
-				      }
-				      
-				    }
-			} catch (IOException e1) {
-				System.out.println("Copy -Fail - IOException");
-				return ;
-			}
+
+	    	  try {
+			File folder = new File(tempDirectoy);
+			File[] listOfFiles = folder.listFiles();
+			    for (int i = 0; i < listOfFiles.length; i++) {
+			    	
+			      if (listOfFiles[i].isFile()) {
+			    	  //System.out.println("File " + listOfFiles[i].getName());
+							copyFile(listOfFiles[i].getName(), listOfFiles[i].getName());
+						
+			      } else if (listOfFiles[i].isDirectory()) {
+			    	  //System.out.println("Directory " + listOfFiles[i].getName());
+			    	  if(listOfFiles[i].getName().contains("keywordscms") 
+			    			  || listOfFiles[i].getName().contains("updater") 
+			    			  || listOfFiles[i].getName().contains("src")){
+			    			System.out.println("skip D - " + tempDirectoy + "\\" + listOfFiles[i].getName());				    		  
+			    	  }else{
+					    	  copyDir(listOfFiles[i].getName(), listOfFiles[i].getName());
+			    	  }
+			      }
+			      
+			    }
+			    System.out.println("Update changes -" + listOfFiles.length);
+	    	  } catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
-		
+		System.out.println("------------------------------------------------------------------------------------");
 	}
 	
 	private boolean pullGitAndUnzip() throws IOException{
