@@ -5,7 +5,7 @@ public enum Subtype {
 	NS3,
 	NS3A,
 	NS3B,
-	Trajong,
+	Trachong,
 	SC1,
 	PBT5
 }

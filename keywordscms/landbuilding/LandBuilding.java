@@ -41,7 +41,7 @@ public class LandBuilding extends BaseApplication {
 			input.subtype = Subtype.Chanode;	
 		}
 		else if(subtypeStr.contains("ตราจอง")){
-			input.subtype = Subtype.Trajong;
+			input.subtype = Subtype.Trachong;
 		}
 		else if(subtypeStr.contains("นส.3ก")){
 			input.subtype = Subtype.NS3A;
@@ -102,7 +102,19 @@ public class LandBuilding extends BaseApplication {
 													xls.getString(idx, 13), 
 													xls.getString(idx, 14));
 		input.cost						= fieldOption(xls.getString(idx, 15));
-		input.partial					= xls.getString(idx, 17).contains("ไม่") ? false : true;
+		String partialStr 				= xls.getString(idx, 17);
+		if(partialStr.contains("เลือกไม่ใช่")){
+			input.partial = Partial.No;
+		}
+		else if(partialStr.contains("เลือกใช่แบบบรรยายสัดส่วนของผู้ถือกรรมสิทธิ์ และระบุตำแหน่งที่ตั้ง")){
+			input.partial = Partial.WithOwnerWithPlace;			
+		}
+		else if(partialStr.contains("เลือกใช่แบบบรรยายสัดส่วนของผู้ถือกรรมสิทธิ์ และไม่ระบุตำแหน่งที่ตั้ง")){
+			input.partial = Partial.WithOwnerNoPlace;			
+		}
+		else if(partialStr.contains("เลือกใช่แบบไม่บรรยายสัดส่วนของผู้ถือกรรมสิทธิ์ และไม่ระบุตำแหน่งที่ตั้ง")){
+			input.partial = Partial.NoOwnerNoPlace;						
+		}
 		
 		//pre
 		input.testcaseId 				= xls.getString(idx, 3);
@@ -124,7 +136,7 @@ public class LandBuilding extends BaseApplication {
 	}	
 	
 	public void run(){
-		int start = 2;
+		int start = 3;
 		int size = getSize(col.B, 1);
 		int max = size + start;
 		System.out.println("size = " + size);

@@ -14,7 +14,7 @@ public class LandBuildingInput {
 	public boolean 	nonCRM;
 	public ValuateMethod valMethod;
 	public Field 	cost;
-	public boolean 	partial;
+	public Partial 	partial;
 	//pre
 	public String 	testcaseId;
 	public String 	username;

@@ -14,7 +14,8 @@ public class Main {
 //		new Accounting(getAssignedPath()).run();
 //		new Equity(getAssignedPath()).run();
 //		new Bond(getAssignedPath()).run();
-		new LandBuilding(getAssignedPath()).run();
+//		new LandBuilding(getAssignedPath()).run();
+		new SyncRepo().sync();
 		return ;		
 	}
 	

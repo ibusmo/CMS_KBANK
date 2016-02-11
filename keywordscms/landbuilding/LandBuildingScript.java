@@ -19,28 +19,69 @@ public class LandBuildingScript extends KeywordsCMS {
 	public boolean executeTask() {
 		
 		super.logtab 			= log.LogTag.logtab.Collateral;
-		create(3, 1);
-//		general();
 		
-//		information();
-//		buildingInfo();
+		information();
+		buildingInfo();
 		
-//		otherInfo(input.otherInfo, input.nonCRM, 1, 1, 2, 2);			
-//		
-//		valuateMethod(input.valMethod);
-//		
-//		cost();												
-//		
-//		expense(input.expense);
+		otherInfo(input.otherInfo, input.nonCRM, 1, 1, 2, 2);			
+		
+		valuateMethod(input.valMethod);
+		
+		cost();												
+		
+		expense(input.expense);
 		partialMortgage();
-//		
-//		super.logtab 			= log.LogTag.logtab.Owner;
-//		owner(input.cif);
-//		
-//		super.logtab 			= log.LogTag.logtab.SaveOK;
-//		input.collId = complete();
-//		
+		
+		super.logtab 			= log.LogTag.logtab.Owner;
+		owner(input.cif);
+		
+		super.logtab 			= log.LogTag.logtab.SaveOK;
+		input.collId = complete();
+		
 		return super.executeTask();
+	}
+
+	private void information() {
+		switch(input.subtype){
+		case Chanode:
+			create(3, 1);
+			general();
+			informationChanode();
+			break;
+			
+		case NS3A:
+			create(3, 2);
+			general();
+			informationNs3A();
+			break;
+
+		case Trachong:
+			create(3, 3);
+			general();
+			informationTrachong();
+			break;
+			
+		case NS3:
+			create(3, 4);
+			general();
+			informationNs3();
+			break;
+			
+		case NS3B:
+			create(3, 5);
+			general();
+			informationNs3B();
+			break;
+
+		case SC1:
+			break;
+			
+		case PBT5:
+			break;
+			
+		default:
+			break;	
+		}
 	}
 
 	private void buildingInfo() {
@@ -239,18 +280,241 @@ public class LandBuildingScript extends KeywordsCMS {
 		super.logsubtab 			= log.LogTag.logsubtab.PartialMortgage;
 		//มูลค่าหลักประกัน
 		click(fieldType.linktext, "จำนองเฉพาะส่วน");
-
-		if(input.partial){
+		
+		switch(input.partial){
+		case No:
+			radio(fieldType.name, "landIsPartPledged", "2");
+			break;
+		case NoOwnerNoPlace:
 			radio(fieldType.name, "landIsPartPledged", "1");
 			dropdownSelectName("landPartialCond", 2);
 			type(fieldType.name, "landOwnlndvol1", getNum(1));
 			type(fieldType.name, "landOwnlndvol2", getNum(1));
 			type(fieldType.name, "landOwnlndvol3", getNum(2));
 			type(fieldType.name, "landPartialRemark", "ที่ดินติดแม่น้ำ");
-		}else{
-			radio(fieldType.name, "landIsPartPledged", "2");
-		}
+			break;
+		case WithOwnerNoPlace:
+			radio(fieldType.name, "landIsPartPledged", "1");
+			dropdownSelectName("landPartialCond", 3);
+			type(fieldType.name, "landTotalPorttion", getNum(2));
+			click(fieldType.value, "คำนวณ");
+			type(fieldType.name, "landPartialRemark", "ที่ดินติดแม่น้ำ");
+			break;
+		case WithOwnerWithPlace:
+			radio(fieldType.name, "landIsPartPledged", "1");
+			dropdownSelectName("landPartialCond", 4);
+			type(fieldType.name, "landTotalPorttion", getNum(2));
+			click(fieldType.value, "คำนวณ");
+			type(fieldType.name, "landLocation1", "สะพานแดง");
+			type(fieldType.name, "landLocation2", "สะพานเหลือง");
+			type(fieldType.name, "landLocation3", "สะพานเขียว");			
+			type(fieldType.name, "landPartialRemark", "ที่ดินติดแม่น้ำ");
+			break;
+		default:
+			break;}
+		
+		saveDraft();
+		takeExecuteCapture(super.logsubtab.toString());		
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////// LAND
+	private void informationChanode() {
+		super.logsubtab 			= log.LogTag.logsubtab.Information;
+
+		//Land Information
+		click(fieldType.linktext, "ข้อมูลที่ดิน");
+
+		//Require Field		
+		if(input.landInfo.equals(Field.All) || input.landInfo.equals(Field.Require)){
 			
+			
+			type(fieldType.name, "landLndNo", getNum(3)); //เลขที่เอกสารสิทธิ์
+			type(fieldType.name, "landNumber", getNum(3)); //เลขที่ดิน
+			type(fieldType.name, "landBkNo", getNum(3)); //เล่มที่
+			type(fieldType.name, "landPageNo", getNum(3)); //หน้าที่
+			type(fieldType.name, "landRavang", getNum(3)); //เลขที่ระวาง
+			type(fieldType.name, "landDocPageNo", getNum(3)); //หน้าสำรวจ
+			type(fieldType.name, "landLndVol1", "1"); //ไร่
+			type(fieldType.name, "landLndVol2", "1"); //งาน
+			type(fieldType.name, "landLndVol3", "1"); //ตารางวา
+			
+			dropdownSelectId("landProvinceCd", 4);
+			dropdownSelectId("landAmphurCd", 5);
+			dropdownSelectId("landTambolCd", 5);
+			
+		}
+
+		//All Field
+		if(input.landInfo.equals(Field.All)){
+
+			//Non Require
+			type(fieldType.name,"address", "ตำแหน่งที่ตั้ง"); //ตำแหน่งที่ตั้ง
+			type(fieldType.name,"landStatus", "สภาพที่ดิน"); //สภาพที่ดิน
+			type(fieldType.name,"collDoclct", "สถานที่เก็บเอกสารหลักประกัน"); //สถานที่เก็บเอกสารหลักประกัน
+			type(fieldType.name,"collRemarks", "หมายเหตุ"); //หมายเหตุ
+		}
+		
+		saveDraft();
+		takeExecuteCapture(super.logsubtab.toString());		
+	}
+	
+	private void informationNs3() {
+		super.logsubtab 			= log.LogTag.logsubtab.Information;
+		
+		//Land Information
+		click(fieldType.linktext, "ข้อมูลที่ดิน");
+		
+		//Require Field
+		
+		if(input.landInfo.equals(Field.All) || input.landInfo.equals(Field.Require)){
+			
+			type(fieldType.name, "landBkNo", getNum(3)); //เล่มที่
+			type(fieldType.name, "landPageNo", getNum(3)); //หน้าที่
+			type(fieldType.name, "landSarabobBkNo", getNum(3)); //สารบบเล่มเลขที่ 
+			
+			type(fieldType.name, "landLndVol1", "1"); //ไร่
+			type(fieldType.name, "landLndVol2", "1"); //งาน
+			type(fieldType.name, "landLndVol3", "1"); //ตารางวา
+			
+			dropdownSelectId("landProvinceCd", 4);
+			dropdownSelectId("landAmphurCd", 5);
+			dropdownSelectId("landTambolCd", 5);
+			
+		}
+
+		//All Field
+		if(input.landInfo.equals(Field.All)){
+
+			//Non Require
+			
+			type(fieldType.name, "landLndNo", getNum(3)); //เลขที่เอกสารสิทธิ์
+			type(fieldType.name, "landGrpNo", getNum(3)); //หมู่ที่
+			
+			type(fieldType.name,"address", "ตำแหน่งที่ตั้ง"); //ตำแหน่งที่ตั้ง
+			type(fieldType.name,"landStatus", "สภาพที่ดิน"); //สภาพที่ดิน
+			type(fieldType.name,"collDoclct", "สถานที่เก็บเอกสารหลักประกัน"); //สถานที่เก็บเอกสารหลักประกัน
+			type(fieldType.name,"collRemarks", "หมายเหตุ"); //หมายเหตุ
+		}
+		
+		saveDraft();
+		takeExecuteCapture(super.logsubtab.toString());		
+	}
+	
+	private void informationNs3A() {
+		super.logsubtab 			= log.LogTag.logsubtab.Information;
+		
+		//Land Information
+		click(fieldType.linktext, "ข้อมูลที่ดิน");
+		
+		//Require Field
+		
+		if(input.landInfo.equals(Field.All) || input.landInfo.equals(Field.Require)){
+				
+				type(fieldType.name, "landLndNo", getNum(3)); //เลขที่เอกสารสิทธิ์
+				type(fieldType.name, "landNumber", getNum(3)); //เลขที่ดิน
+				type(fieldType.name, "landBkNo", getNum(3)); //เล่มที่
+				type(fieldType.name, "landPageNo", getNum(3)); //หน้าที่
+				type(fieldType.name, "ravangImgName", getNum(3)); //ระวางรูปถ่ายทางอากาศชื่อ
+				type(fieldType.name, "sensingImgNumber", getNum(3)); //หมายเลข
+				type(fieldType.name, "sensingImgPageNo", getNum(3)); //แผ่นที่ 
+				 
+				type(fieldType.name, "landLndVol1", "1"); //ไร่
+				type(fieldType.name, "landLndVol2", "1"); //งาน
+				type(fieldType.name, "landLndVol3", "1"); //ตารางวา
+				
+				dropdownSelectId("landProvinceCd", 4);
+				dropdownSelectId("landAmphurCd", 5);
+				dropdownSelectId("landTambolCd", 5);
+			}
+			//All Field
+			if(input.landInfo.equals(Field.All)){
+	
+				//Non Require
+				type(fieldType.name,"address", "ตำแหน่งที่ตั้ง"); //ตำแหน่งที่ตั้ง
+				type(fieldType.name,"landStatus", "สภาพที่ดิน"); //สภาพที่ดิน
+				type(fieldType.name,"collDoclct", "สถานที่เก็บเอกสารหลักประกัน"); //สถานที่เก็บเอกสารหลักประกัน
+				type(fieldType.name,"collRemarks", "หมายเหตุ"); //หมายเหตุ
+			}
+		saveDraft();
+		takeExecuteCapture(super.logsubtab.toString());		
+	}
+	
+	private void informationNs3B() {
+		super.logsubtab 			= log.LogTag.logsubtab.Information;
+		
+		//Land Information
+		click(fieldType.linktext, "ข้อมูลที่ดิน");
+		
+		//Require Field
+		
+		if(input.landInfo.equals(Field.All) || input.landInfo.equals(Field.Require)){
+			
+			type(fieldType.name, "landBkNo", getNum(3)); //เล่มที่
+			type(fieldType.name, "landPageNo", getNum(3)); //หน้าที่
+			type(fieldType.name, "landNumNo", getNum(3)); //เลขที่  
+			
+			type(fieldType.name, "landLndVol1", "1"); //ไร่
+			type(fieldType.name, "landLndVol2", "1"); //งาน
+			type(fieldType.name, "landLndVol3", "1"); //ตารางวา
+			
+			dropdownSelectId("landProvinceCd", 4);
+			dropdownSelectId("landAmphurCd", 5);
+			dropdownSelectId("landTambolCd", 5);
+		}
+
+		//All Field
+		if(input.landInfo.equals(Field.All)){
+
+			//Non Require
+			type(fieldType.name, "landLndNo", getNum(3)); //เลขที่เอกสารสิทธิ์
+			type(fieldType.name, "landGrpNo", getNum(3)); //หมู่ที่
+			
+			type(fieldType.name,"address", "ตำแหน่งที่ตั้ง"); //ตำแหน่งที่ตั้ง
+			type(fieldType.name,"landStatus", "สภาพที่ดิน"); //สภาพที่ดิน
+			type(fieldType.name,"collDoclct", "สถานที่เก็บเอกสารหลักประกัน"); //สถานที่เก็บเอกสารหลักประกัน
+			type(fieldType.name,"collRemarks", "หมายเหตุ"); //หมายเหตุ
+		}
+		
+		saveDraft();
+		takeExecuteCapture(super.logsubtab.toString());		
+	}
+	
+	private void informationTrachong() {
+		super.logsubtab 			= log.LogTag.logsubtab.Information;
+		
+		//Land Information
+		click(fieldType.linktext, "ข้อมูลที่ดิน");
+		
+		//Require Field
+		
+		if(input.landInfo.equals(Field.All) || input.landInfo.equals(Field.Require)){
+			type(fieldType.name, "landLndNo", getNum(3)); //เลขที่เอกสารสิทธิ์
+			type(fieldType.name, "landBkNo", getNum(3)); //เล่มที่
+			type(fieldType.name, "landPageNo", getNum(3)); //หน้าที่
+			
+			type(fieldType.name, "landLndVol1", "1"); //ไร่
+			type(fieldType.name, "landLndVol2", "1"); //งาน
+			type(fieldType.name, "landLndVol3", "1"); //ตารางวา
+			
+			dropdownSelectId("landProvinceCd", 4);
+			dropdownSelectId("landAmphurCd", 5);
+			dropdownSelectId("landTambolCd", 5);
+			
+		}
+
+		//All Field
+		if(input.landInfo.equals(Field.All)){
+			//Non Require
+			type(fieldType.name, "landNumber", getNum(3)); //เลขที่ดิน
+			type(fieldType.name, "landRavang", getNum(3)); //เลขที่ระวาง
+			type(fieldType.name, "landDocPageNo", getNum(3)); //หน้าสำรวจ
+			
+			type(fieldType.name,"address", "ตำแหน่งที่ตั้ง"); //ตำแหน่งที่ตั้ง
+			type(fieldType.name,"landStatus", "สภาพที่ดิน"); //สภาพที่ดิน
+			type(fieldType.name,"collDoclct", "สถานที่เก็บเอกสารหลักประกัน"); //สถานที่เก็บเอกสารหลักประกัน
+			type(fieldType.name,"collRemarks", "หมายเหตุ"); //หมายเหตุ
+		}
+		
 		saveDraft();
 		takeExecuteCapture(super.logsubtab.toString());		
 	}
