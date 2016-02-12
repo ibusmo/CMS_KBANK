@@ -72,8 +72,12 @@ public class SyncRepo {
 					if (listOfFiles[i].isFile()) {
 						// System.out.println("File " +
 						// listOfFiles[i].getName());
-						copyFile(listOfFiles[i].getName(), listOfFiles[i].getName());
-
+						if (listOfFiles[i].getName().contains(".") 
+								&& !listOfFiles[i].getName().toLowerCase().contains("readme")){
+							System.out.println("skip D - " + tempDirectoy + "\\" + listOfFiles[i].getName());
+						}else{
+							copyFile(listOfFiles[i].getName(), listOfFiles[i].getName());
+						}
 					} else if (listOfFiles[i].isDirectory()) {
 						// System.out.println("Directory " +
 						// listOfFiles[i].getName());
