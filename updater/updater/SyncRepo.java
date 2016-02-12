@@ -80,6 +80,7 @@ public class SyncRepo {
 						if (listOfFiles[i].getName().contains("keywordscms")
 								|| listOfFiles[i].getName().contains("updater")
 								|| listOfFiles[i].getName().contains("src")
+								|| listOfFiles[i].getName().contains("output")
 								|| listOfFiles[i].getName().contains(".")) {
 							System.out.println("skip D - " + tempDirectoy + "\\" + listOfFiles[i].getName());
 						} else {
