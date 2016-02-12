@@ -78,7 +78,7 @@ public class SyncRepo {
 						// System.out.println("Directory " +
 						// listOfFiles[i].getName());
 						if (listOfFiles[i].getName().contains("keywordscms")
-								|| listOfFiles[i].getName().contains("updater")
+								//|| listOfFiles[i].getName().contains("updater")
 								|| listOfFiles[i].getName().contains("src")
 								|| listOfFiles[i].getName().contains("output")
 								|| listOfFiles[i].getName().contains(".")) {
